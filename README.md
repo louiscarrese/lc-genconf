@@ -14,8 +14,8 @@ Just as any other WordPress plugin, copy the `lc-wpgenconf` folder in `wp-conten
 
 ## Usage
 
-- Define a function namedx yourid_configuration_defintion() returning the array describing the configuration (see documentation)
-- Call lc_wpgenconf('yourid', yourid_configuration_definition()) to get the HTML fragment.
+- Define a function named `yourid_configuration_defintion()` returning the array describing the configuration (see [documentation](https://github.com/louiscarrese/lc-wpgenconf/wiki/configuration_array#configuration-array))
+- Call `lc_wpgenconf('yourid', yourid_configuration_definition())` to get the HTML fragment.
 
 ## Known limitations
 
