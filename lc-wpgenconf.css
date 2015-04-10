@@ -1,0 +1,59 @@
+.lc_genconf_wrap {
+	width: 100%;
+}
+
+.lc_genconf_wrap  h2 {
+	color: #222;
+	font-size: 23px;
+}
+
+.lc_genconf_repeater {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.lc_genconf_section_title {
+	position: relative;
+	float: left;
+	width: 25%;
+}
+
+.lc_genconf_section_title span {
+	color: #222;
+	font-size: 14px;
+	font-weight: 600;
+
+}
+
+.lc_genconf_section_content {
+	position: relative;
+	float: right;
+	width: 75%;
+
+	font-size: 14px;
+}
+
+.lc_genconf_section_content td {
+	line-height: 1.4em;
+}
+
+.lc_genconf_explanation {
+	color: #666;
+	font-style: italic;
+}
+
+.lc_genconf_spacer {
+	clear: both;
+}
+
+.lc_genconf_repeater:nth-child(odd) {
+	background-color: white;
+}
+
+#lc_genconf_special_addrepeater {
+    margin-right: 1em;
+}
+
+.lc_genconf_hidden {
+    display: none;
+}
