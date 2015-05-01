@@ -41,6 +41,10 @@ function lc_genconf_add_repeater() {
 
 /**
  * Main function, generates HTML code, based on the configuration array
+ * @param key the unique identifier of the configuration (the key used in the WP database)
+ * @param conf_array the array describing the configuration
+ * @param echo if true, the HTML chunk will be echoed (default: false)
+ * @return the HTML chunk ready to be put in a WP administration page
  */
 function lc_wpgenconf($key, $conf_array, $echo = false) {
   //Get data in DB if any
@@ -56,12 +60,12 @@ function lc_wpgenconf($key, $conf_array, $echo = false) {
   $first_free_id = 0;
   //If there are no stored values, display an empty one
   if(count($stored_values) == 0) {
-    $html .= lc_generate_configuration($key, $conf_array, 0);
+    $html .= lc_generate_configuration($conf_array, 0);
     $first_free_id = 1;
   } else {
     //Generate the configuration as stored
     foreach($stored_values as $id => $stored_value) {
-      $html .= lc_generate_configuration($key, $conf_array, $id, $stored_value);
+      $html .= lc_generate_configuration($conf_array, $id, $stored_value);
     }
     //Calculate the next id, for the repeater
     while(isset($stored_values[$first_free_id])){
@@ -87,9 +91,12 @@ function lc_wpgenconf($key, $conf_array, $echo = false) {
 
 /**
  * Generate HTML for one repeater configuration.
- * TODO: $key might be useless
+ * @param conf_array the array describing the configuration
+ * @param id the identifier of the repeater
+ * @param values_array the values retrieved from database
+ * @return a configuration block (one repeater)
  */
-function lc_generate_configuration($key, $conf_array, $id, $values_array = array()) {
+function lc_generate_configuration($conf_array, $id, $values_array = array()) {
   $html = '';
 
   //Start the repeater
@@ -133,7 +140,13 @@ function lc_generate_configuration($key, $conf_array, $id, $values_array = array
   return $html;
 }
 
-/** Compute the value of a field, based on the data retrieved from DB and the default value in conf */
+/** 
+ * Compute the value of a field, based on the data retrieved from DB and the default value in conf 
+ * @param key the id of the field in database
+ * @param values_array the values retrieved in database
+ * @param field_conf the configuration array of the field
+ * @return the computed value
+ */
 function lc_genconf_compute_value($key, $values_array, $field_conf) {
   $value = null;
   if(isset($values_array[$key]) && $values_array[$key] != null) {
