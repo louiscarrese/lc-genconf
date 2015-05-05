@@ -1,58 +1,104 @@
-function lcGenconfCheckboxes() {
-	var checkboxes = document.querySelectorAll(".lc_genconf_wrap input[type=checkbox]");
 
-	for(var i = 0; i < checkboxes.length; i++) {
-		var checkbox = checkboxes[i];
-		var id = checkbox.id;
-		var hidden_id = "lc_genconf_hidden_" + id;
+function lcSendForm() {
 
-		if(document.getElementById(id).checked == true) {
-			document.getElementById(hidden_id).value = "true";
+    //Get the form
+    var form = document.getElementById("lc_genconf_form");
+
+    //Initialize the data
+    var data = new Object();
+    data['action'] = 'lc_genconf_submit_form';
+    data['conf_key'] = document.getElementById('lc_genconf_special_conf_key').value;
+
+
+    //Iterate over repeater
+    var repeaters = form.getElementsByClassName("lc_genconf_repeater");    
+    for(var rIdx = 0; rIdx < repeaters.length; rIdx++) {
+	//Initialize repeater data
+	data[rIdx] = new Object();
+	
+	//Iterate over sections
+	var sections = repeaters[rIdx].getElementsByClassName("lc_genconf_section");
+	for(var sIdx = 0; sIdx < sections.length; sIdx++) {
+	    //Get the section id
+	    var sectionId = sections[sIdx].getAttribute("data-sectionid");
+
+	    //Initialize section data
+	    data[rIdx][sectionId] = new Object();
+	    
+	    //Iterate over inputs
+	    var inputs = sections[sIdx].getElementsByTagName("input");
+	    for(var iIdx = 0; iIdx < inputs.length; iIdx++) {
+		//Handle checkboxes separately
+		if(inputs[iIdx].attributes['type'].value != 'checkbox') {
+		    //Get its name and value
+		    var inputName = inputs[iIdx].name;
+		    var inputValue = inputs[iIdx].value;
+		    
+		    //Store its value
+		    data[rIdx][sectionId][inputName] = inputValue;
 		} else {
-			document.getElementById(hidden_id).value = "false";
+		    var inputName = inputs[iIdx].name;
+		    if(inputs[iIdx].checked)
+			data[rIdx][sectionId][inputName] = 1;
+		    else
+			data[rIdx][sectionId][inputName] = 0;
 		}
-	}
 
-	return true;
+	    }
+	    
+	    //Iterate over selects
+	    var selects = sections[sIdx].getElementsByTagName("select");
+	    for(var slIdx = 0; slIdx < selects.length; slIdx++) {
+		//Get its name and value
+		var selectName = selects[slIdx].name;
+		var selectValue = selects[slIdx].value;
+		//Store its value
+		data[rIdx][sectionId][selectName] = selectValue;
+	    }
+	}
+    }
+
+    //Send the data
+    jQuery.post(ajaxurl, data);
 }
 
 function lcAddRepeaterSection() {
-
-	var nextid = document.getElementById("lc_genconf_add_repeater_nextid").value;
+    
+    var nextid = document.getElementById("lc_genconf_add_repeater_nextid").value;
     var confKey = document.getElementById("lc_genconf_special_conf_key").value;
-	var params = "action=lc_genconf_add_repeater&lc_genconf_special_repeater_nextid=" + nextid + "&lc_genconf_special_conf_key=" + confKey;
-
-	var request = new XMLHttpRequest();
-	request.open('POST', ajaxurl, true);
-	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	request.onreadystatechange = function() {
-		if (this.readyState === 4) {
-			if (this.status >= 200 && this.status < 400) {
-				// Success!
-				lcAppendRepeaterSection(this.responseText);
-			} else {
-				// Error :(
-			}
-		}
-	};
-
-	request.send(params);
-	request = null;
-
+    var params = "action=lc_genconf_add_repeater&lc_genconf_special_repeater_nextid=" + nextid + "&lc_genconf_special_conf_key=" + confKey;
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', ajaxurl, true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.onreadystatechange = function() {
+	if (this.readyState === 4) {
+	    if (this.status >= 200 && this.status < 400) {
+		// Success!
+		lcAppendRepeaterSection(this.responseText);
+	    } else {
+		// Error :(
+	    }
+	}
+    };
+    
+    request.send(params);
+    request = null;
+    
 }
 
 function lcGenconfCheckCondition(elem) {
-    //Récupération de la valeur de l'élément conditionnant
+    //Get the value of the conditionning element
     var conditionValue = elem.value;
-
-    //Récupération du div de section correspondant
+    
+    //Get the corresponding section div
     var sectionDiv = getParentByClassName(elem, "lc_genconf_section");    
     var sectionDivId = sectionDiv.id;
-
-    //Récupération des <tr> de la section
+    
+    //Get the <tr>s in the section
     var tr = document.querySelectorAll('#' + sectionDivId + ' tr');
-
-    //Pour chacun, affichage ou masquage en fonction de la valeur
+    
+    //For each <tr> display or not the line
     for(var i = 0; i < tr.length; i++) {
 	var conditionCheckValue = tr[i].getAttribute("data-condition");
 	if(conditionCheckValue != undefined && conditionCheckValue != "") {
@@ -62,42 +108,41 @@ function lcGenconfCheckCondition(elem) {
 		addClass(tr[i], "lc_genconf_hidden");
 	    }
 	}
-    }
-
+    }    
 }
 
 function lcAppendRepeaterSection(html) {
-	document.getElementById('lc_genconf_content').insertAdjacentHTML('beforeend', html);
+    document.getElementById('lc_genconf_content').insertAdjacentHTML('beforeend', html);
     var nextid = lcFirstFreeId();
-	document.getElementById("lc_genconf_add_repeater_nextid").value = nextid;
+    document.getElementById("lc_genconf_add_repeater_nextid").value = nextid;
 }
 
 function lcDeleteRepeaterSection(aTag) {
-	repeaterSection = aTag.parentNode;
-	content = repeaterSection.parentNode;
-
-	content.removeChild(repeaterSection);
-
+    repeaterSection = aTag.parentNode;
+    content = repeaterSection.parentNode;
+    
+    content.removeChild(repeaterSection);
+    
     var nextid = lcFirstFreeId();
-	document.getElementById("lc_genconf_add_repeater_nextid").value = nextid;
-
+    document.getElementById("lc_genconf_add_repeater_nextid").value = nextid;
+    
 }
 
 
 function lcFirstFreeId() {
     var firstFreeId = 0;
     var repeaters = document.getElementsByClassName("lc_genconf_repeater");
-
+    
     while(isUsedId(firstFreeId, repeaters)) {
 	firstFreeId++;
     }
-
+    
     return firstFreeId;
 }
 
 function isUsedId(id, repeaters) {
     for(var i = 0; i < repeaters.length; i++) {
-
+	
 	var repeaterId = getRepeaterId(repeaters[i]);
 	if(repeaterId === id) {
 	    return true;
@@ -122,7 +167,7 @@ function getRepeaterId(repeater) {
     } else {
 	return -1;
     }
-
+    
 }
 
 function getParentByClassName(elem, className) {
