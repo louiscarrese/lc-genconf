@@ -10,20 +10,17 @@ A Wordpress plugin that eases the creation of configuration pages for other plug
 
 ## Install
 
-Just as any other WordPress plugin, copy the `lc-wpgenconf` folder in `wp-content/plugins/`
+Just as any other WordPress plugin, copy the `lc-wpgenconf` folder in `wp-content/plugins/` then activate it in the Wordpress configuration
 
 ## Usage
 
 - Define a function named `yourid_configuration_defintion()` returning the array describing the configuration (see [documentation](https://github.com/louiscarrese/lc-wpgenconf/wiki/configuration_array#configuration-array))
-- Call `lc_wpgenconf('yourid', yourid_configuration_definition())` to get the HTML fragment.
+- Call `lc_wpgenconf('yourid')` to get the HTML fragment.
 
 ## Known limitations
 
 ### Disclaimer
 This plugin has been developped aside other plugins of mine. It does what I need for those plugins and not much more.
-
-### Code ugliness
-The code is quite ugly, but it does the job.
 
 ### Supported fields
 As of today, only those types of fields can be defined (more can be added as I need them or if asked) :
@@ -32,5 +29,3 @@ As of today, only those types of fields can be defined (more can be added as I n
 - Dropdown list
 - Category list (wp_dropdown_categories)
 
-### Boolean support
-Booleans are stored as string in the database because of a quick fix and lack of time to find a better solution.
