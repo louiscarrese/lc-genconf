@@ -24,6 +24,18 @@ function lc_wpgenconf_scripts_register() {
   wp_enqueue_script('lc_genconf_script', plugins_url('lc-wpgenconf.js', __FILE__));
 }
 
+/** Simplified entry point for the users */
+function lc_wpgenconf($wp_key) {
+  //generate the configuration definition function
+  $conf_def_function = $wp_key . '_conf_definition';
+  $conf_def_function = str_replace('-', '_', $conf_def_function);
+
+  //Instantiate the configuration
+  $configuration = new LcWpGenconf\Configuration($wp_key, $conf_def_function());
+
+  return $configuration->toHTML();
+}
+
 /** Ajax callback to save the configuration */
 function lc_genconf_submit_form() {
   //Retrieve the configuration key
