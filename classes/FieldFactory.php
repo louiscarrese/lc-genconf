@@ -1,5 +1,5 @@
 <?php 
-namespace LcWpGenconf;
+namespace LcGenconf;
 require_once('FieldDefinition.php');
 require_once('TextFieldDefinition.php');
 require_once('DropdownFieldDefinition.php');

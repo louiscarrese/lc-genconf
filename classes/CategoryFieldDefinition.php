@@ -1,5 +1,5 @@
 <?php 
-namespace LcWpGenconf;
+namespace LcGenconf;
 
 class CategoryFieldDefinition extends FieldDefinition {
   private $label;

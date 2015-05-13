@@ -1,5 +1,5 @@
 <?php 
-namespace LcWpGenconf;
+namespace LcGenconf;
 
 require_once('ConfigurationDefinitionElement.php');
 require_once('FieldFactory.php');

@@ -1,5 +1,5 @@
 <?php 
-namespace LcWpGenconf;
+namespace LcGenconf;
 
 class CheckboxFieldDefinition extends FieldDefinition {
   private $label;

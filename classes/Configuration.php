@@ -1,5 +1,5 @@
 <?php 
-namespace LcWpGenconf;
+namespace LcGenconf;
 
 require_once('ConfigurationDefinition.php');
 

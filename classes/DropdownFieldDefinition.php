@@ -1,5 +1,5 @@
 <?php 
-namespace LcWpGenconf;
+namespace LcGenconf;
 
 class DropdownFieldDefinition extends FieldDefinition {
   private $label;
