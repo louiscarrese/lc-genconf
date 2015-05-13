@@ -1,4 +1,4 @@
-# lc-wpgenconf
+# lc-genconf
 
 A Wordpress plugin that eases the creation of configuration pages for other plugins.
 
@@ -10,12 +10,12 @@ A Wordpress plugin that eases the creation of configuration pages for other plug
 
 ## Install
 
-Just as any other WordPress plugin, copy the `lc-wpgenconf` folder in `wp-content/plugins/` then activate it in the Wordpress configuration
+Just as any other WordPress plugin, copy the `lc-genconf` folder in `wp-content/plugins/` then activate it in the Wordpress configuration
 
 ## Usage
 
 - Define a function named `yourid_configuration_defintion()` returning the array describing the configuration (see [documentation](https://github.com/louiscarrese/lc-wpgenconf/wiki/configuration_array#configuration-array))
-- Call `lc_wpgenconf('yourid')` to get the HTML fragment.
+- Call `lc_genconf('yourid')` to get the HTML fragment.
 
 ## Known limitations
 
