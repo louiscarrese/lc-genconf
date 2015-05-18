@@ -16,6 +16,10 @@ class ConfigurationReader {
     }
   }
 
+  public function getRaw() {
+    return $this->values;
+  }
+
   public function setCurrentRepeater($repeaterId) {
     $this->currentRepater = $repeaterId;
   }

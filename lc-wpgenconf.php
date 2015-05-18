@@ -27,6 +27,7 @@
 
 
 require_once('classes/Configuration.php');
+require_once('classes/ConfigurationReader.php');
 
 /** WP Hooks */
 //Register javascript and CSS
