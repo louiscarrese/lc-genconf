@@ -1,11 +1,4 @@
 <?php
-/**
- * Plugin Name: lc-genconf
- * Description: A plugin configuration generator. It's only meant to be a dependency for other plugins.
- * Version: 1.0.0
- * Author: Louis Carrese
- * License: GPLv2 or later
- */
 
 /* ================================================================================ 
   Copyright 2014 Louis Carrese
